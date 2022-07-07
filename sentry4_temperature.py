@@ -8,9 +8,8 @@ def parse_sentry4_temperature(string_table):
 
     parsed = {'Temperature':'Temperature'}
 
-    for (value, status) in enumerate(string_table):
-        print(int(value))
-        print(status)
+    for (value, status) in string_table:
+        print(value + ' ' + status)
 
     return parsed
 
