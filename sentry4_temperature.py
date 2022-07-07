@@ -5,9 +5,13 @@ from pprint import pprint
 from random import randint
 
 def parse_sentry4_temperature(string_table):
+
     parsed = {'Temperature':'Temperature'}
-    pprint(parsed)
-    pprint(string_table)
+
+    for (value, status) in enumerate(string_table):
+        print(int(value))
+        print(status)
+
     return parsed
 
 register.snmp_section(
@@ -30,8 +34,6 @@ def discover_sentry4_temperature(section):
 def check_sentry4_temperature(item, section):
     if item not in section:
         return
-
-    pprint(section)
 
     yield Metric('temp', randint(1, 100))
 
