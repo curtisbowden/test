@@ -31,7 +31,7 @@ def check_sentry4_temperature(item, section):
     if item not in section:
         return
 
-    yield Metric('test', randint(1, 100))
+    yield Metric('temp', randint(1, 100))
 
     summary = 'Summary'
     yield Result(state=State.OK, summary=summary)
