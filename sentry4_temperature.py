@@ -51,7 +51,7 @@ def check_sentry4_temperature(item, section):
 
     yield Metric('temp', randint(1, 100))
 
-    summary = 'Summary'
+    summary = str(item['Value']) + ' °C'
     yield Result(state=State.OK, summary=summary)
 
 
