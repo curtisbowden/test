@@ -16,7 +16,7 @@ register.snmp_section(
     name='sentry4_temperature',
     detect=exists('.1.3.6.1.4.1.1718.4.1.1.1.1.0'),
     fetch=SNMPTree(
-        base='.1.3.6.1.4.1.1718.4.1.9.3.1', # Sentry4-MIB::st4TempSensorMonitorTable
+        base='.1.3.6.1.4.1.1718.4.1.9', # Sentry4-MIB::st4TempSensorMonitorTable
         oids=[
             '1.10', # Sentry4-MIB::st4TempSensorScale
             '3.1.1', # Sentry4-MIB::st4TempSensorValue
