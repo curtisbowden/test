@@ -11,7 +11,10 @@ def parse_sentry4_temperature(string_table):
     for (scale, sensor_id, name, value, status) in string_table:
 
         if scale != '':
-            print("Scale:" + scale)
+            if int(scale) == 0:
+                print('C')
+            elif int(scale) == 1:
+                print('F')
         elif scale == '' and value != '' and int(value) == -410:
             # No sensor connected
             continue
