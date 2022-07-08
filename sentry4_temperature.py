@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from tkinter import W
 from .agent_based_api.v1 import *
 from pprint import pprint
 from random import randint
@@ -20,6 +21,8 @@ def parse_sentry4_temperature(string_table):
             parsed[item] = {}
             parsed[item]['Value'] = float(int(value)/10)
             parsed[item]['Status'] = int(status)
+
+    pprint(parsed)
 
     return parsed
 
