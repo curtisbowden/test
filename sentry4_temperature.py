@@ -62,6 +62,6 @@ register.check_plugin(
     service_name='%s',
     discovery_function=discover_sentry4_temperature,
     check_function=check_sentry4_temperature,
-    check_default_paramaters={},
+    check_default_parameters={},
     check_ruleset_name='temperature',
 )
