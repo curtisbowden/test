@@ -47,6 +47,9 @@ def check_sentry4_temperature(item, params, section):
     if item not in section:
         return
 
+    print('Params')
+    pprint(params)
+
     if section[item]['Status'] == 0:
         summary = str(section[item]['Value']) + ' °C'
 
