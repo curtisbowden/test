@@ -8,7 +8,8 @@ def parse_sentry4_temperature(string_table):
 
     parsed = {'Temperature':'Temperature'}
 
-    pprint(string_table)
+    for (scale, id, name, value, status) in string_table:
+        print(scale + id + name + value + status)
 
     return parsed
 
