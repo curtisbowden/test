@@ -50,7 +50,7 @@ def check_sentry4_temperature(item, section):
     pprint(section)
 
     if section[item]['Status'] == 0:
-        summary = str(section[item]['Value']).replace('(',r'\(').replace(')',r'\)')+ ' °C'
+        summary = str(section[item]['Value']) + ' °C'
 
         yield Metric('temp', section[item]['Value'])
 
