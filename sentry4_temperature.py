@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from tkinter import W
 from .agent_based_api.v1 import *
 from pprint import pprint
 from random import randint
