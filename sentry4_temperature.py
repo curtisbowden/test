@@ -16,7 +16,7 @@ def parse_sentry4_temperature(string_table):
             # No sensor connected
             continue
         else:
-            item = 'Temperature ' + sensor_id + ' ' + name.replace('(', '[')
+            item = 'Temperature ' + sensor_id + ' ' + name.replace('(', r'\(')
             parsed[item] = {}
             parsed[item]['Value'] = float(int(value)/10)
             parsed[item]['Status'] = int(status)
@@ -46,8 +46,6 @@ def discover_sentry4_temperature(section):
 def check_sentry4_temperature(item, section):
     if item not in section:
         return
-
-    pprint(section)
 
     if section[item]['Status'] == 0:
         summary = str(section[item]['Value']) + ' °C'
