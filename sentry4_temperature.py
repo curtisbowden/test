@@ -16,7 +16,7 @@ def parse_sentry4_temperature(string_table):
             # No sensor connected
             continue
         else:
-            item = 'Temperature ' + sensor_id + ' ' + name.replace('(', r'\(')
+            item = 'Temperature ' + sensor_id + ' ' + name.replace('(', '[').replace(')', ']')
             parsed[item] = {}
             parsed[item]['Value'] = float(int(value)/10)
             parsed[item]['Status'] = int(status)
