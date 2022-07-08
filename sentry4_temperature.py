@@ -21,8 +21,6 @@ def parse_sentry4_temperature(string_table):
             parsed[item]['Value'] = float(int(value)/10)
             parsed[item]['Status'] = int(status)
 
-    pprint(parsed)
-
     return parsed
 
 register.snmp_section(
@@ -49,11 +47,15 @@ def check_sentry4_temperature(item, section):
     if item not in section:
         return
 
-    yield Metric('temp', section[item]['Value'])
+    if section[item]['Status'] == 0:
+        summary = str(section[item]['Value']).replace('(',r'\(').replace(')',r'\)')+ ' °C'
 
-    summary = str(section[item]['Value']) + ' °C'
-    yield Result(state=State.OK, summary=summary)
+        yield Metric('temp', section[item]['Value'])
 
+        yield Result(state=State.OK, summary=summary)
+
+    else:
+        yield Result(state=State.CRIT, summary='Sensor Error')
 
 register.check_plugin(
     name='sentry4_temperature',
