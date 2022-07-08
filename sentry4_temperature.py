@@ -21,7 +21,7 @@ def parse_sentry4_temperature(string_table):
             parsed[item]['Value'] = float(int(value)/10)
             parsed[item]['Status'] = int(status)
 
-    pprint(parsed)
+    pprint('Parsed:' + parsed)
 
     return parsed
 
@@ -47,7 +47,7 @@ def discover_sentry4_temperature(section):
 
 def check_sentry4_temperature(item, section):
 
-    pprint(section)
+    pprint('Section:' + section)
 
     if item not in section:
         return
