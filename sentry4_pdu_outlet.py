@@ -6,8 +6,8 @@ from random import randint
 
 def parse_sentry4_pdu_outlet(string_table):
     parsed = {'Outlet':'Outlet'}
-    pprint(parsed)
-    pprint(string_table)
+    #pprint(parsed)
+    #pprint(string_table)
     return parsed
 
 register.snmp_section(
