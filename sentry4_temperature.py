@@ -17,6 +17,7 @@ def parse_sentry4_temperature(string_table):
             continue
         else:
             item = 'Temperature ' + sensor_id + ' ' + name
+            parsed[item] = {}
             parsed[item]['Value'] = int(value)
             parsed[item]['Status'] = int(status)
 
