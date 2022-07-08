@@ -44,6 +44,9 @@ def discover_sentry4_temperature(section):
         yield Service(item=service)
 
 def check_sentry4_temperature(item, section):
+
+    pprint(section)
+
     if item not in section:
         return
 
