@@ -43,7 +43,7 @@ def discover_sentry4_temperature(section):
     for service in section.keys():
         yield Service(item=service)
 
-def check_sentry4_temperature(item, section):
+def check_sentry4_temperature(item, params, section):
     if item not in section:
         return
 
