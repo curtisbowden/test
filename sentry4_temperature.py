@@ -6,17 +6,21 @@ from random import randint
 
 def parse_sentry4_temperature(string_table):
 
-    parsed = {'Temperature':'Temperature'}
+    parsed = {}
 
-    for (scale, id, name, value, status) in string_table:
+    for (scale, sensor_id, name, value, status) in string_table:
 
         if scale != '':
             print("Scale:" + scale)
         elif scale == '' and value != '' and int(value) == -410:
-            # Sensor not connected
+            # No sensor here
             continue
         else:
-            print(scale + id + name + value + status)
+            item = 'Temperature ' + sensor_id + ' ' + name
+            parsed[item]['Value'] = int(value)
+            parsed[item]['Status'] = int(status)
+
+    pprint(parsed)
 
     return parsed
 
