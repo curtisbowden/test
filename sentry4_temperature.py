@@ -64,16 +64,16 @@ def check_sentry4_temperature(item, params, section):
     if item not in section:
         return
 
-    low_alarm = ''
-    low_warning = ''
-    high_warning = ''
-    high_alarm = ''
+    low_alarm = 0.0
+    low_warning = 0.0
+    high_warning = 0.0
+    high_alarm = 0.0
 
     if params == {}:
-        low_alarm = section[item]['LowAlarm']
-        low_warning = section[item]['LowWarning']
-        high_warning = section[item]['HighWarning']
-        high_alarm = section[item]['HighWarning']
+        low_alarm = float(section[item]['LowAlarm'])
+        low_warning = float(section[item]['LowWarning'])
+        high_warning = float(section[item]['HighWarning'])
+        high_alarm = float(section[item]['HighWarning'])
     else:
         low_alarm = params['levels_lower'][1]
         low_warning = params['levels_lower'][0]
