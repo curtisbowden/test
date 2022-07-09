@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from re import I
 from .agent_based_api.v1 import *
 from pprint import pprint
 from random import randint
@@ -8,7 +9,15 @@ def parse_sentry4_temperature(string_table):
 
     parsed = {}
 
-    for (scale, sensor_id, name, value, status, low_alarm, low_warn, high_warn, high_alarm) in string_table:
+    for (scale, \
+         sensor_id, \
+         name, \
+         value, \
+         status, \
+         low_alarm, \
+         low_warn, \
+         high_warn, \
+         high_alarm) in string_table:
 
         if scale != '':
             continue
@@ -55,12 +64,23 @@ def check_sentry4_temperature(item, params, section):
     if item not in section:
         return
 
+    low_alarm = ''
+    low_warning = ''
+    high_warning = ''
+    high_alarm = ''
+
     if params == {}:
-        print('Temp Sensor Defaults')
-        pprint(section)
+        low_alarm = section[item]['LowAlarm']
+        low_warning = section[item]['LowWarning']
+        high_warning = section[item]['HighWarning']
+        high_alarm = section[item]['HighWarning']
     else:
-        print('Params')
-        pprint(params)
+        #low_alarm = section[item]['LowAlarm']
+        #low_warning = section[item]['LowWarning']
+        #high_warning = params['levels'][0]
+        #high_alarm = section[item]['HighWarning']
+
+        print(params['levels'])
 
     if section[item]['Status'] == 0:
         summary = str(section[item]['Value']) + ' °C'
