@@ -91,7 +91,7 @@ def check_sentry4_temperature(item, params, section):
             yield Result(state=State.WARN, summary='Temperature below warning threshold {low_warning}')
 
 
-        yield Result(state=State.OK, summary='{temperature} ... °C')
+        yield Result(state=State.OK, summary=str(temperature) + '°C')
 
     else:
         yield Result(state=State.CRIT, summary='Sensor Error')
