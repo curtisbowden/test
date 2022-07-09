@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from curses import termattrs
-from re import I
 from .agent_based_api.v1 import *
 from pprint import pprint
 from random import randint
