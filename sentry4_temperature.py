@@ -8,7 +8,7 @@ def parse_sentry4_temperature(string_table):
 
     parsed = {}
 
-    for (scale, sensor_id, name, value, status) in string_table:
+    for (scale, sensor_id, name, value, status, low_alarm, low_warn, high_warn, high_alarm) in string_table:
 
         if scale != '':
             continue
@@ -20,6 +20,10 @@ def parse_sentry4_temperature(string_table):
             parsed[item] = {}
             parsed[item]['Value'] = float(int(value)/10)
             parsed[item]['Status'] = int(status)
+            parsed[item]['LowAlarm'] = int(low_alarm)
+            parsed[item]['LowWarning'] = int(low_warn)
+            parsed[item]['HighWarning'] = int(high_warn)
+            parsed[item]['HighAlarm'] = int(high_alarm)
 
     return parsed
 
@@ -34,6 +38,10 @@ register.snmp_section(
             '2.1.3', # Sentry4-MIB::st4TempSensorName
             '3.1.1', # Sentry4-MIB::st4TempSensorValue
             '3.1.2', # Sentry4-MIB::st4TempSensorStatus
+            '4.1.2', # Sentry4-MIB::st4TempSensorLowAlarm
+            '4.1.3', # Sentry4-MIB::st4TempSensorLowWarning
+            '4.1.4', # Sentry4-MIB::st4TempSensorHighWarning
+            '4.1.5', # Sentry4-MIB::st4TempSensorHighAlarm
         ],
     ),
     parse_function=parse_sentry4_temperature,
@@ -47,8 +55,12 @@ def check_sentry4_temperature(item, params, section):
     if item not in section:
         return
 
-    print('Params')
-    pprint(params)
+    if params == {}:
+        print('Temp Sensor Defaults')
+        pprint(section)
+    else:
+        print('Params')
+        pprint(params)
 
     if section[item]['Status'] == 0:
         summary = str(section[item]['Value']) + ' °C'
