@@ -85,6 +85,11 @@ def check_sentry4_temperature(item, params, section):
     print(high_warning)
     print(high_alarm)
 
+    print(type(low_alarm))
+    print(type(low_warning))
+    print(type(high_warning))
+    print(type(high_alarm))
+
     if section[item]['Status'] == 0:
         summary = str(section[item]['Value']) + ' °C'
 
