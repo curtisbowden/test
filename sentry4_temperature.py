@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from curses import termattrs
 from re import I
 from .agent_based_api.v1 import *
 from pprint import pprint
@@ -81,11 +82,16 @@ def check_sentry4_temperature(item, params, section):
         high_alarm = params['levels'][1]
 
     if section[item]['Status'] == 0:
-        summary = str(section[item]['Value']) + ' °C'
+        temperature = section[item]['Value']
+        summary = str(temperature) + ' °C'
 
-        yield Metric('temp', section[item]['Value'])
+        yield Metric('temp', temperature)
 
-        yield Result(state=State.OK, summary=summary)
+        if temperature <= low_warning:
+            yield Result(state=State.WARN, summary='Temperature below warning threshold {low_warning}')
+
+
+        yield Result(state=State.OK, summary='{temperature} ... °C')
 
     else:
         yield Result(state=State.CRIT, summary='Sensor Error')
