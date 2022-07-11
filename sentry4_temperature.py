@@ -20,21 +20,21 @@ def parse_sentry4_temperature(string_table):
 
         pprint(string_table)
 
-        if scale != '':
-            continue
+        unit = 'c'
 
-        if int(value) == -410:
-            # No sensor connected
-            continue
+        if scale == '1':
+            unit = 'f'
         else:
-            item = 'Temperature ' + sensor_id + ' ' + name
-            parsed[item] = {}
-            parsed[item]['Value'] = float(int(value)/10)
-            parsed[item]['Status'] = int(status)
-            parsed[item]['low_alarm'] = int(low_alarm)
-            parsed[item]['low_warning'] = int(low_warning)
-            parsed[item]['high_warning'] = int(high_warning)
-            parsed[item]['high_alarm'] = int(high_alarm)
+            if value !='' and int(value) != -410:
+                item = 'Temperature ' + sensor_id + ' ' + name
+                parsed[item] = {}
+                parsed[item]['unit'] = unit
+                parsed[item]['value'] = float(int(value)/10)
+                parsed[item]['status'] = int(status)
+                parsed[item]['low_alarm'] = int(low_alarm)
+                parsed[item]['low_warning'] = int(low_warning)
+                parsed[item]['high_warning'] = int(high_warning)
+                parsed[item]['high_alarm'] = int(high_alarm)
 
     return parsed
 
@@ -88,8 +88,8 @@ def check_sentry4_temperature(item, params, section):
         high_alarm = float(section[item]['high_alarm'])
 
 
-    if section[item]['Status'] == 0:
-        temperature = section[item]['Value']
+    if section[item]['status'] == 0:
+        temperature = section[item]['value']
 
         yield Metric('temp', temperature, levels=(high_warning, high_alarm))
 
