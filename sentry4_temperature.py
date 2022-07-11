@@ -18,8 +18,6 @@ def parse_sentry4_temperature(string_table):
          high_warning, \
          high_alarm) in string_table:
 
-        pprint(string_table)
-
         unit = 'c'
 
         if scale == '1':
@@ -66,7 +64,7 @@ def check_sentry4_temperature(item, params, section):
     if item not in section:
         return
 
-    pprint(params)
+    pprint(section[item])
 
     low_alarm = 0.0
     low_warning = 0.0
