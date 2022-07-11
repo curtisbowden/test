@@ -89,16 +89,16 @@ def check_sentry4_temperature(item, params, section):
         yield Metric('temp', temperature)
 
         if temperature <= low_alarm:
-            yield Result(state=State.CRIT, summary='Temperature ' + str(temperature) + ' °C is below critical threshold')
+            yield Result(state=State.CRIT, summary=str(temperature) + ' °C is below critical threshold')
 
         elif temperature >= high_alarm:
-            yield Result(state=State.CRIT, summary='Temperature ' + str(temperature) + ' °C is above critical threshold')
+            yield Result(state=State.CRIT, summary=str(temperature) + ' °C is above critical threshold')
 
         elif temperature >= high_warning:
-            yield Result(state=State.WARN, summary='Temperature ' + str(temperature) + ' °C is above warning threshold')
+            yield Result(state=State.WARN, summary=str(temperature) + ' °C is above warning threshold')
 
         elif temperature <= low_warning:
-            yield Result(state=State.WARN, summary='Temperature ' + str(temperature) + ' °C is below warning threshold')
+            yield Result(state=State.WARN, summary=str(temperature) + ' °C is below warning threshold')
 
         else:
             yield Result(state=State.OK, summary=str(temperature) + ' °C')
