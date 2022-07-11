@@ -68,16 +68,20 @@ def check_sentry4_temperature(item, params, section):
     high_warning = 0.0
     high_alarm = 0.0
 
-    if params == {}:
-        low_alarm = float(section[item]['LowAlarm'])
-        low_warning = float(section[item]['LowWarning'])
-        high_warning = float(section[item]['HighWarning'])
-        high_alarm = float(section[item]['HighWarning'])
-    else:
+    if 'levels_lower' in params:
         low_alarm = params['levels_lower'][1]
         low_warning = params['levels_lower'][0]
+    else:
+        low_alarm = float(section[item]['LowAlarm'])
+        low_warning = float(section[item]['LowWarning'])
+
+    if 'levels' in params:
         high_warning = params['levels'][0]
         high_alarm = params['levels'][1]
+    else:
+        high_warning = float(section[item]['HighWarning'])
+        high_alarm = float(section[item]['HighWarning'])
+
 
     if section[item]['Status'] == 0:
         temperature = section[item]['Value']
@@ -87,11 +91,11 @@ def check_sentry4_temperature(item, params, section):
         if temperature <= low_alarm or temperature >= high_alarm:
             yield Result(state=State.CRIT, summary='Temperature Critical')
 
-        elif temperature <= low_warning:
-            yield Result(state=State.WARN, summary='Temperature Low')
-
         elif temperature >= high_warning:
             yield Result(state=State.WARN, summary='Temperature High')
+
+        elif temperature <= low_warning:
+            yield Result(state=State.WARN, summary='Temperature Low')
 
         else:
             yield Result(state=State.OK, summary=str(temperature) + ' °C')
