@@ -14,8 +14,8 @@ def parse_sentry4_temperature(string_table):
          value, \
          status, \
          low_alarm, \
-         low_warn, \
-         high_warn, \
+         low_warning, \
+         high_warning, \
          high_alarm) in string_table:
 
         if scale != '':
@@ -28,10 +28,10 @@ def parse_sentry4_temperature(string_table):
             parsed[item] = {}
             parsed[item]['Value'] = float(int(value)/10)
             parsed[item]['Status'] = int(status)
-            parsed[item]['LowAlarm'] = int(low_alarm)
-            parsed[item]['LowWarning'] = int(low_warn)
-            parsed[item]['HighWarning'] = int(high_warn)
-            parsed[item]['HighAlarm'] = int(high_alarm)
+            parsed[item]['low_alarm'] = int(low_alarm)
+            parsed[item]['low_warning'] = int(low_warning)
+            parsed[item]['high_warning'] = int(high_warning)
+            parsed[item]['high_alarm'] = int(high_alarm)
 
     return parsed
 
@@ -72,15 +72,15 @@ def check_sentry4_temperature(item, params, section):
         low_alarm = params['levels_lower'][1]
         low_warning = params['levels_lower'][0]
     else:
-        low_alarm = float(section[item]['LowAlarm'])
-        low_warning = float(section[item]['LowWarning'])
+        low_alarm = float(section[item]['low_alarm'])
+        low_warning = float(section[item]['low_warning'])
 
     if 'levels' in params:
         high_warning = params['levels'][0]
         high_alarm = params['levels'][1]
     else:
-        high_warning = float(section[item]['HighWarning'])
-        high_alarm = float(section[item]['HighWarning'])
+        high_warning = float(section[item]['high_warning'])
+        high_alarm = float(section[item]['high_alarm'])
 
 
     if section[item]['Status'] == 0:
