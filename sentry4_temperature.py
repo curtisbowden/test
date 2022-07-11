@@ -18,8 +18,11 @@ def parse_sentry4_temperature(string_table):
          high_warning, \
          high_alarm) in string_table:
 
+        pprint(string_table)
+
         if scale != '':
             continue
+
         if int(value) == -410:
             # No sensor connected
             continue
