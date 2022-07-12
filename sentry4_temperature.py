@@ -64,7 +64,7 @@ def check_sentry4_temperature(item, params, section):
     if item not in section:
         return
 
-    pprint(section[item])
+    pprint(params)
 
     low_alarm = 0.0
     low_warning = 0.0
