@@ -64,8 +64,6 @@ def check_sentry4_temperature(item, params, section):
     if item not in section:
         return
 
-    pprint(params)
-
     low_alarm = 0.0
     low_warning = 0.0
     high_warning = 0.0
@@ -87,21 +85,24 @@ def check_sentry4_temperature(item, params, section):
 
 
     if section[item]['status'] == 0:
-        temperature = section[item]['value']
+
+        if section[item]['unit'] == 'c':
+            temperature = section[item]['value']
+            summary = str(temperature) + ' °C'
 
         yield Metric('temp', temperature, levels=(high_warning, high_alarm))
 
         if temperature <= low_alarm:
-            yield Result(state=State.CRIT, summary=str(temperature) + ' °C is below critical threshold')
+            yield Result(state=State.CRIT, summary=summary + ' is below critical threshold')
 
         elif temperature >= high_alarm:
-            yield Result(state=State.CRIT, summary=str(temperature) + ' °C is above critical threshold')
+            yield Result(state=State.CRIT, summary=summary + ' is above critical threshold')
 
         elif temperature >= high_warning:
-            yield Result(state=State.WARN, summary=str(temperature) + ' °C is above warning threshold')
+            yield Result(state=State.WARN, summary=summary + ' is above warning threshold')
 
         elif temperature <= low_warning:
-            yield Result(state=State.WARN, summary=str(temperature) + ' °C is below warning threshold')
+            yield Result(state=State.WARN, summary=summary + ' is below warning threshold')
 
         else:
             yield Result(state=State.OK, summary=str(temperature) + ' °C')
