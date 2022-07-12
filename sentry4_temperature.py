@@ -87,8 +87,16 @@ def check_sentry4_temperature(item, params, section):
     if section[item]['status'] == 0:
 
         if section[item]['unit'] == 'c':
+            if params['output_unit'] == 'f':
+                temperature = (section[item]['value'] * 9/5) + 32
+                summary = str(temperature) + ' °F'
+            else:
+                temperature = section[item]['value']
+                summary = str(temperature) + ' °C'
+
+        else:
             temperature = section[item]['value']
-            summary = str(temperature) + ' °C'
+            summary = str(temperature) + ' °F'
 
         yield Metric('temp', temperature, levels=(high_warning, high_alarm))
 
@@ -105,7 +113,7 @@ def check_sentry4_temperature(item, params, section):
             yield Result(state=State.WARN, summary=summary + ' is below warning threshold')
 
         else:
-            yield Result(state=State.OK, summary=str(temperature) + ' °C')
+            yield Result(state=State.OK, summary=summary)
 
     else:
         yield Result(state=State.CRIT, summary='Sensor Error')
