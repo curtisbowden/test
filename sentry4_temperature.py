@@ -83,6 +83,8 @@ def check_sentry4_temperature(item, params, section):
         high_warning = float(section[item]['high_warning'])
         high_alarm = float(section[item]['high_alarm'])
 
+    pprint(params)
+
 
     if section[item]['status'] == 0:
 
@@ -104,7 +106,6 @@ def check_sentry4_temperature(item, params, section):
                 temperature = temperature + 273.15
                 summary = str(temperature) + ' K'
             else:
-                summary = str(temperature) + ' °C'
                 summary = str(temperature) + ' °F'
 
         yield Metric('temp', temperature, levels=(high_warning, high_alarm))
