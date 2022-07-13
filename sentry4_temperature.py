@@ -86,17 +86,26 @@ def check_sentry4_temperature(item, params, section):
 
     if section[item]['status'] == 0:
 
-        if section[item]['unit'] == 'c':
-            if params['output_unit'] == 'f':
-                temperature = (section[item]['value'] * 9/5) + 32
-                summary = str(temperature) + ' °F'
-            else:
-                temperature = section[item]['value']
-                summary = str(temperature) + ' °C'
+        temperature = section[item]['value']
 
+        if section[item]['unit'] == 'c':
+            if 'output_unit' in params and params['output_unit'] == 'f':
+                temperature = (temperature * 9/5) + 32
+                summary = str(temperature) + ' °F'
+            elif 'output_unit' in params and params['output_unit'] == 'k':
+                temperature = temperature + 273.15
+                summary = str(temperature) + ' K'
+            else:
+                summary = str(temperature) + ' °C'
         else:
-            temperature = section[item]['value']
-            summary = str(temperature) + ' °F'
+            if 'output_unit' in params and params['output_unit'] == 'f':
+                summary = str(temperature) + ' °F'
+            elif 'output_unit' in params and params['output_unit'] == 'k':
+                temperature = temperature + 273.15
+                summary = str(temperature) + ' K'
+            else:
+                summary = str(temperature) + ' °C'
+                summary = str(temperature) + ' °F'
 
         yield Metric('temp', temperature, levels=(high_warning, high_alarm))
 
